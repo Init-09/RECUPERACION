@@ -10,7 +10,7 @@ namespace PM2E2GRUPO4.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Models.Item> DataStore => DependencyService.Get<IDataStore<Models.Item>>();
+        public IDataStore<Models.ItemModel> DataStore => DependencyService.Get<IDataStore<Models.ItemModel>>();
 
         bool isBusy = false;
         public bool IsBusy

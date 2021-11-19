@@ -39,11 +39,11 @@ namespace PM2E2GRUPO4.ViewModels
             }
         }
 
-        public async void LoadItemId(string itemId)
+        public void LoadItemId(string itemId)
         {
             try
             {
-                
+
             }
             catch (Exception)
             {

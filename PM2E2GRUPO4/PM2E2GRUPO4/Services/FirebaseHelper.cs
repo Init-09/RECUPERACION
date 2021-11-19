@@ -11,50 +11,51 @@ namespace PM2E2GRUPO4.Services
 {
     public class FirebaseHelper
     {
-        public async Task<List<Models.Item>> GetItems()
+        public async Task<List<ItemModel>> GetAllPersons()
         {
             return (await firebase
-                .Child("sitios")
-                .OnceAsync<Item>()).Select(utem => new Item
-                {
-                    Id = utem.Object.Id,
-                    Descripcion = utem.Object.Descripcion,
-                    Latitud = utem.Object.Latitud,
-                    Longitud = utem.Object.Longitud
-                }).ToList();
+              .Child("sitios")
+              .OnceAsync<ItemModel>()).Select(item => new ItemModel
+              {
+                  Descripcion = item.Object.Descripcion,
+                  ItemId = item.Object.ItemId,
+                  Latitud = item.Object.Latitud,
+                  Longitud = item.Object.Longitud,
+                  Img = item.Object.Img
+              }).ToList();
         }
-        public async Task AddPerson(Models.Item _item)
+        public async Task AddPerson(Models.ItemModel _itemmodel)
         {
             await firebase
             .Child("sitios")
-            .PostAsync(new Models.Item()
+            .PostAsync(new ItemModel()
             {
-                Id = Guid.NewGuid(),
-                Descripcion = _item.Descripcion,
-                Latitud = _item.Latitud,
-                Longitud = _item.Longitud,
-                Img = _item.Img,
+                ItemId = Guid.NewGuid(),
+                Descripcion = _itemmodel.Descripcion,
+                Latitud = _itemmodel.Latitud,
+                Longitud = _itemmodel.Longitud,
+                Img = _itemmodel.Img
             });
         }
 
 
-        public async Task UpdatePerson(Models.Item _item)
+        public async Task UpdatePerson(ItemModel _personModel)
         {
             var toUpdatePerson = (await firebase
-              .Child("Persons")
-              .OnceAsync<Item>()).Where(a => a.Object.Id == _item.Id).FirstOrDefault();
+              .Child("sitios")
+              .OnceAsync<ItemModel>()).Where(a => a.Object.ItemId == _personModel.ItemId).FirstOrDefault();
 
             await firebase
               .Child("Persons")
-              .Child((string)toUpdatePerson.Key)
-              .PutAsync(new Models.Item() { Id = _item.Id, Descripcion = _item.Descripcion, Latitud = _item.Latitud, Longitud = _item.Longitud, Img = _item.Img });
+              .Child(toUpdatePerson.Key)
+              .PutAsync(new ItemModel() { ItemId = _personModel.ItemId, Descripcion = _personModel.Descripcion, Latitud = _personModel.Latitud, Longitud = _personModel.Longitud, Img = _personModel.Img });
         }
 
         public async Task DeletePerson(Guid itemid)
         {
             var toDeletePerson = (await firebase
               .Child("sitios")
-              .OnceAsync<Item>()).Where(a => a.Object.Id == itemid).FirstOrDefault();
+              .OnceAsync<ItemModel>()).Where(a => a.Object.ItemId == itemid).FirstOrDefault();
             await firebase.Child("sitios").Child(toDeletePerson.Key).DeleteAsync();
 
         }

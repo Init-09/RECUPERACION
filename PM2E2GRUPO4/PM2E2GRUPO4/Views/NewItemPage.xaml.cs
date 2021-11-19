@@ -10,7 +10,7 @@ namespace PM2E2GRUPO4.Views
 {
     public partial class NewItemPage : ContentPage
     {
-        public Item Item { get; set; }
+        public ItemModel Item { get; set; }
 
         public NewItemPage()
         {

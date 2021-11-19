@@ -54,7 +54,7 @@
                     TextColor="black"/>
                 <Button 
                     CornerRadius="190"
-                    Margin="0,10,0,0" Text="Salvar" Clicked="Buttonsave_Clicked"
+                    Margin="0,10,0,0" Text="Salvar" Clicked="Buttonsave_ClickedAsync"
                     BackgroundColor="{StaticResource Primary}"
                     TextColor="White" />
             </StackLayout>

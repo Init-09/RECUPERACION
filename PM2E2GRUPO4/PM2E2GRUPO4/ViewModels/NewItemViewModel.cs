@@ -1,6 +1,8 @@
 ﻿using PM2E2GRUPO4.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -9,57 +11,41 @@ namespace PM2E2GRUPO4.ViewModels
 {
     public class NewItemViewModel : BaseViewModel
     {
-        private string text;
-        private string description;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public NewItemViewModel()
+        protected new void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            SaveCommand = new Command(OnSave, ValidateSave);
-            CancelCommand = new Command(OnCancel);
-            this.PropertyChanged +=
-                (_, __) => SaveCommand.ChangeCanExecute();
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
         }
 
-        private bool ValidateSave()
+        protected void SetValue<T>(ref T backingFieled, T value, [CallerMemberName] string propertyName = null)
         {
-            return !String.IsNullOrWhiteSpace(text)
-                && !String.IsNullOrWhiteSpace(description);
-        }
+            if (EqualityComparer<T>.Default.Equals(backingFieled, value))
 
-        public string Text
-        {
-            get => text;
-            set => SetProperty(ref text, value);
-        }
-
-        public string Description
-        {
-            get => description;
-            set => SetProperty(ref description, value);
-        }
-
-        public Command SaveCommand { get; }
-        public Command CancelCommand { get; }
-
-        private async void OnCancel()
-        {
-            // This will pop the current page off the navigation stack
-            await Shell.Current.GoToAsync("..");
-        }
-
-        private async void OnSave()
-        {
-            Item newItem = new Item()
             {
-                Id = Guid.NewGuid().ToString(),
-                Text = Text,
-                Description = Description
-            };
 
-            await DataStore.AddItemAsync(newItem);
+                return;
 
-            // This will pop the current page off the navigation stack
-            await Shell.Current.GoToAsync("..");
+            }
+
+            backingFieled = value;
+
+            OnPropertyChanged(propertyName);
+        }
+
+        protected virtual void OnPropertyChangeds([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+
+            if (handler != null)
+
+            {
+
+                handler(this, new PropertyChangedEventArgs(propertyName));
+
+            }
         }
     }
 }

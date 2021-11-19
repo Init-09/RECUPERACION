@@ -90,7 +90,7 @@ namespace PM2E2GRUPO4.Services
         #region Methods
         private async void InsertMethod()
         {
-            var utem = new Models.Item
+            var utem = new ItemModel
             {
                 Descripcion = descripcion,
                 Latitud = latitud,
@@ -104,27 +104,27 @@ namespace PM2E2GRUPO4.Services
 
             await Task.Delay(1000);
 
-            _ = LoadData();
+            LoadData();
 
             this.IsRefreshing = false;
         }
 
         public async Task LoadData()
         {
-            this.ListViewSource = await firebaseHelper.GetItems();
+            this.ListViewSource = await firebaseHelper.GetAllPersons();
         }
 
         #endregion
 
         #region .
-        public ObservableCollection<Models.Item> IngredientsCollection = new ObservableCollection<Models.Item>();
+        public ObservableCollection<ItemModel> IngredientsCollection = new ObservableCollection<ItemModel>();
 
         private async Task TestListViewBindingAsync()
         {
-            var Ingredients = new List<Models.Item>();
+            var Ingredients = new List<ItemModel>();
 
             {
-                Ingredients = await firebaseHelper.GetItems();
+                Ingredients = await firebaseHelper.GetAllPersons();
             }
             foreach (var Ingredient in Ingredients)
             {
@@ -138,7 +138,6 @@ namespace PM2E2GRUPO4.Services
         {
             LoadData();
             TestListViewBindingAsync();
-
         }
         #endregion
     }
