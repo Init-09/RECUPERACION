@@ -19,8 +19,7 @@
                     HasUnevenRows="True"
                     IsPullToRefreshEnabled="True"
                     IsRefreshing="{Binding IsRefreshing}"
-                    x:Name="ListViewName"
-                    ItemSelected="ListViewName_ItemSelected">
+                    x:Name="ListViewName">
                     
 
         <ListView.ItemTemplate >
