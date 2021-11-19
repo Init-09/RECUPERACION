@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PM2E2GRUPO4.Views.AboutPage"
+             xmlns:vm="clr-namespace:PM2E2GRUPO4.ViewModels"
+             Title="PM2E2GRUPO4">
+    
+    <ContentPage.BindingContext>
+        <vm:AboutViewModel />
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackLayout BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                <ContentView Padding="0,20,0,20" VerticalOptions="FillAndExpand">
+                    <Image x:Name="imgCam" Source="https://cdn-icons-png.flaticon.com/512/149/149071.png" VerticalOptions="Center" HeightRequest="128" />
+                </ContentView>
+            </StackLayout>
+        </StackLayout>
+        <ScrollView Grid.Row="1">
+            <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
+                
+                <Button Margin="0,10,0,0" Text="Tomar Foto"
+                        x:Name="btnCam"
+                        CornerRadius="190"
+                        Clicked="BtnCam_Clicked"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
+                <Entry  
+                    x:Name="descrip"
+                    Margin="0,15,0,0" Placeholder="Descripcion"
+                    TextColor="black"/>
+                <Label Text="Latitud: " Margin="0,15,0,0"/>
+                <Entry 
+                    IsEnabled="False"
+                    x:Name="lat"
+                    Margin="0,5,0,0" Placeholder="Latitud"
+                    TextColor="black"/>
+                <Label Text="Longitud: " Margin="0,15,0,0"/>
+                <Entry  
+                    x:Name="lonf"
+                    IsEnabled="False"
+                    Margin="0,5,0,0" Placeholder="Longitud"
+                    TextColor="black"/>
+                <Button 
+                    CornerRadius="190"
+                    Margin="0,10,0,0" Text="Salvar" Clicked="Buttonsave_Clicked"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White" />
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>
